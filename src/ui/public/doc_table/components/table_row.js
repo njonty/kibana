@@ -11,7 +11,6 @@ import detailsHtml from 'ui/doc_table/components/table_row/details.html';
 import { uiModules } from 'ui/modules';
 import { disableFilter } from 'ui/filter_bar';
 import { dispatchRenderComplete } from 'ui/render_complete';
-
 const module = uiModules.get('app/discover');
 
 
@@ -37,7 +36,10 @@ module.directive('kbnTableRow', function ($compile, $httpParamSerializer, kbnUrl
       columns: '=',
       filter: '=',
       filters: '=?',
-      indexPattern: '=',
+	  myid: '=',
+	  limitrow: "=",
+	  noofrow: '=',
+	  indexPattern: '=',
       row: '=kbnTableRow',
       onAddColumn: '=?',
       onRemoveColumn: '=?',
@@ -80,8 +82,7 @@ module.directive('kbnTableRow', function ($compile, $httpParamSerializer, kbnUrl
 
         $compile($detailsTr)($detailsScope);
       };
-
-      $scope.$watchMulti([
+	  $scope.$watchMulti([
         'indexPattern.timeFieldName',
         'row.highlight',
         '[]columns'
@@ -143,7 +144,7 @@ module.directive('kbnTableRow', function ($compile, $httpParamSerializer, kbnUrl
             timefield: false,
             sourcefield: (column === '_source'),
             formatted: _displayField(row, column, true),
-            filterable: isFilterable,
+			filterable: isFilterable,
             column
           }));
         });

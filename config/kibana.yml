@@ -1,10 +1,10 @@
 # Kibana is served by a back end server. This setting specifies the port to use.
-#server.port: 5601
+server.port: 5601
 
 # Specifies the address to which the Kibana server will bind. IP addresses and host names are both valid values.
 # The default is 'localhost', which usually means remote machines will not be able to connect.
 # To allow connections from remote users, set this parameter to a non-loopback address.
-#server.host: "localhost"
+server.host: "192.168.0.33"
 
 # Enables you to specify a path to mount Kibana at if you are running behind a proxy.
 # Use the `server.rewriteBasePath` setting to tell Kibana if it should remove the basePath
@@ -25,7 +25,7 @@
 #server.name: "your-hostname"
 
 # The URL of the Elasticsearch instance to use for all your queries.
-#elasticsearch.url: "http://localhost:9200"
+elasticsearch.url: "http://192.168.0.33:9200"
 
 # When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host
@@ -34,7 +34,7 @@
 
 # Kibana uses an index in Elasticsearch to store saved searches, visualizations and
 # dashboards. Kibana creates a new index if the index doesn't already exist.
-#kibana.index: ".kibana"
+kibana.index: ".kibana_shresh"
 
 # The default application to load.
 #kibana.defaultAppId: "home"
@@ -81,7 +81,7 @@
 #elasticsearch.customHeaders: {}
 
 # Time in milliseconds for Elasticsearch to wait for responses from shards. Set to 0 to disable.
-#elasticsearch.shardTimeout: 30000
+#elasticsearch.shardTimeout: 0
 
 # Time in milliseconds to wait for Elasticsearch at Kibana startup before retrying.
 #elasticsearch.startupTimeout: 5000
@@ -90,7 +90,7 @@
 #pid.file: /var/run/kibana.pid
 
 # Enables you specify a file where Kibana stores log output.
-#logging.dest: stdout
+logging.dest: stdout
 
 # Set the value of this setting to true to suppress all logging output.
 #logging.silent: false
@@ -100,7 +100,7 @@
 
 # Set the value of this setting to true to log all events, including system usage information
 # and all requests.
-#logging.verbose: false
+logging.verbose: true
 
 # Set the interval in milliseconds to sample system and process performance
 # metrics. Minimum is 100ms. Defaults to 5000.

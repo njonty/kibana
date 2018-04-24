@@ -545,13 +545,24 @@ function discoverController(
       }
 
       $scope.hits = merged.hits.total;
-
       const indexPattern = $scope.searchSource.get('index');
-
       // the merge rows, use a new array to help watchers
       $scope.rows = merged.hits.hits.slice();
 
-      notify.event('flatten hit and count fields', function () {
+	  // find the row no. for which id is selected
+	  // set scope.minimumVisibleRows to row no
+      if($scope.state.myid)
+	  {
+		for(var temp= 0 ;temp <$scope.rows.length;temp++)
+		{
+			if($scope.rows[temp]._id == $scope.state.myid)
+			{
+				$scope.minimumVisibleRows = temp + 5 ;
+			}
+		}
+	  }
+
+	  notify.event('flatten hit and count fields', function () {
         let counts = $scope.fieldCounts;
 
         // if we haven't counted yet, or need a fresh count because we are sorting, reset the counts
@@ -564,14 +575,13 @@ function discoverController(
           // when we are sorting results, we need to redo the counts each time because the
           // "top 500" may change with each response, so don't mark this as counted
           if (!sortFn) hit.$$_counted = true;
-
-          const fields = _.keys(indexPattern.flattenHit(hit));
+		  const fields = _.keys(indexPattern.flattenHit(hit));
           let n = fields.length;
           let field;
           while (field = fields[--n]) {
             if (counts[field]) counts[field] += 1;
             else counts[field] = 1;
-          }
+	}
         });
       });
     });
@@ -653,7 +663,6 @@ function discoverController(
   $scope.scrollToTop = function () {
     $window.scrollTo(0, 0);
   };
-
   $scope.scrollToBottom = function () {
     // delay scrolling to after the rows have been rendered
     $timeout(() => {

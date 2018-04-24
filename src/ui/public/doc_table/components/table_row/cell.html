@@ -8,8 +8,12 @@ if (timefield) {
   attributes='class="discover-table-datafield"';
 }
 %>
+
 <td <%= attributes %> data-test-subj="docTableField">
-  <%= formatted %>
+  <!-- adding background-color: yellow for selectd id -->
+  <span id= "myid" ng-if="row._id == myid" style="background-color:#fff700" <%= formatted %>
+  </span>
+  <span id= myid ng-if= "row._id != myid" <%= formatted %></span>
   <span class="table-cell-filter">
     <% if (filterable) { %>
       <button

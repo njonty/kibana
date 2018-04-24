@@ -17,7 +17,8 @@ uiModules.get('kibana')
       restrict: 'E',
       template: html,
       scope: {
-        sorting: '=',
+        idmain: '=',
+		sorting: '=',
         columns: '=',
         hits: '=?', // You really want either hits & indexPattern, OR searchSource
         indexPattern: '=?',
@@ -35,7 +36,7 @@ uiModules.get('kibana')
         const notify = new Notifier();
 
         $scope.$watch('minimumVisibleRows', (minimumVisibleRows) => {
-          $scope.limit = Math.max(minimumVisibleRows || 50, $scope.limit || 50);
+		$scope.limit = Math.max(minimumVisibleRows || 50, $scope.limit || 50);
         });
 
         $scope.persist = {
@@ -54,7 +55,26 @@ uiModules.get('kibana')
         $scope.addRows = function () {
           $scope.limit += 50;
         };
+	   	
+		//getting the value of window size from infinitescroll onnly once and scrolling to selected row
 
+		var executed = false;
+		$scope.totalhight = function (elTop) {
+			if(!executed)
+			{
+				executed = true;
+				if($scope.limit > $scope.minimumVisibleRows)
+				{
+					var rowhight = elTop/$scope.limit;
+					$scope.minimumVisibleRows = $scope.minimumVisibleRows -5;
+					var scrollhight = rowhight * $scope.minimumVisibleRows;
+				}
+				else
+					scrollhight = elTop;
+				scrollTo(0,scrollhight);
+				console.log("scrollTo : "+scrollhight);
+			}
+		}
         // This exists to fix the problem of an empty initial column list not playing nice with watchCollection.
         $scope.$watch('columns', function (columns) {
           if (columns.length !== 0) return;

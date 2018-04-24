@@ -88,10 +88,13 @@
     ></thead>
     <tbody>
       <tr ng-repeat="row in hits|limitTo:limit track by row._index+row._type+row._id+row._score+row._version"
-        kbn-table-row="row"
+		kbn-table-row="row"
         columns="columns"
         sorting="sorting"
-        index-pattern="indexPattern"
+        myid="idmain"
+		limitrow="limit"
+		noofrow="minimumVisibleRows"
+		index-pattern="indexPattern"
         filter="filter"
         filters="filters"
         class="discover-table-row"
@@ -103,7 +106,8 @@
       ></tr>
     </tbody>
   </table>
-  <kbn-infinite-scroll ng-if="infiniteScroll" more="addRows"></kbn-infinite-scroll>
+  <kbn-infinite-scroll ng-if="infiniteScroll" more="addRows" elhigth="totalhight">
+  </kbn-infinite-scroll>
 </div>
 
 <div ng-if="hits != null && !hits.length" class="table-vis-error">

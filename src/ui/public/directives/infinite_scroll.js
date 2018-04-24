@@ -6,7 +6,8 @@ module.directive('kbnInfiniteScroll', function () {
   return {
     restrict: 'E',
     scope: {
-      more: '='
+      more: '=',
+      elhigth: '='
     },
     link: function ($scope, $element) {
       const $window = $(window);
@@ -14,6 +15,7 @@ module.directive('kbnInfiniteScroll', function () {
 
       function onScroll() {
         if (!$scope.more) return;
+        if (!$scope.elhigth) return;
 
         const winHeight = $window.height();
         const winBottom = winHeight + $window.scrollTop();
@@ -25,8 +27,11 @@ module.directive('kbnInfiniteScroll', function () {
             $scope.more();
           });
         }
-      }
-
+       //calling from discovery and sending window hight
+	   $scope[$scope.$$phase ? '$eval' : '$apply'](function () {
+          $scope.elhigth(elTop - winHeight);
+        });
+	  }
       function scheduleCheck() {
         if (checkTimer) return;
         checkTimer = setTimeout(function () {
